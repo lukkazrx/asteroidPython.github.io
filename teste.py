@@ -1,34 +1,59 @@
-# importa a biblioteca principal do framework
 import pgzrun
 
-# definindo constantes pertinentes ao tamanho da tela
-WIDTH = 450
+# Definindo variáveis globais
+WIDTH = 300
 HEIGHT = 300
+GAME_OVER = False
 
-# Variaveis pertinentes a nosso sprite
-sprite = Actor('troll.png')
+# Definindo variáveis do nosso personagem
+nave = Actor('nave.png', (WIDTH / 2, HEIGHT / 2))
 
-# Define posição inicial do sprite
-sprite.pos = 0,100
+# Função para desenhar a "tela inicial" do jogo
+def draw():
+    # Por boa prática, limpa a tela do jogo caso tenha lixo desenhado
+    screen.clear()
+    
+    if GAME_OVER == False:
+        
+        # Preenche a tela de branco
+        screen.fill( (255, 255, 255) )
+        
+        # Desenha a nave
+        nave.draw()
+        
+    elif GAME_OVER == True:
+        game_over()
 
-# Função de desenho inicial (tela inicial do jogo)
-def draw ():
+def game_over():
     # Limpa a tela
     screen.clear()
-    # Pinta a tela 
-    screen.fill( (255,0,0) )
-    # Desenha nosso sprite 
-    sprite.draw()
-
-
-# Função chamada X vezes por segundo, baseado nos frames
-def update():
-    sprite.left += 2
     
+    # Escreve alguma mensagem de GAME OVER
+    screen.draw.text('GAME OVER!!!!!!', (70, 150))
+    
+# Função chamada 1 vez por frame
+def update():
+    
+    # Retorna o angulo da nave para 0 graus
+    nave.angle = 0
+    
+    # Movimentação da nave
+    if keyboard.left and GAME_OVER == False:
+        nave.x  -= 3
+        nave.angle = 15
+    elif keyboard.right and GAME_OVER == False:
+        nave.x += 3
+        nave.angle = 345
+        
+    if keyboard.up and GAME_OVER == False:
+        nave.y -= 3
+    elif keyboard.down and GAME_OVER == False:
+        nave.y += 3
 
-
-
-
-
-# mandatório ser a última linha de código
 pgzrun.go()
+
+
+
+
+
+
